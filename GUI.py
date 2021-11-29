@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
-
+from League import LeagueRank
 
 class Soccer_Info(QWidget):
 
@@ -41,7 +41,7 @@ class Soccer_Info(QWidget):
 
         point_button = QPushButton('Attack Point Rank')
         selectLayout.addWidget(point_button)
-        point_button.clicked.connect(self.pointClicked)
+        # point_button.clicked.connect(self.pointClicked)
 
         team_button = QPushButton('Team Rank')
         selectLayout.addWidget(team_button)
@@ -61,12 +61,10 @@ class Soccer_Info(QWidget):
     def assistClicked(self):
         pass
 
-    def pointClicked(self):
-        pass
-
     def teamClickced(self):
-        pass
-
+        league = self.comboBox.currentText() # 콤보박스에서 선택된 리그 가져오기
+        league_rank_list = LeagueRank(league)
+        self.rank_display.setText(league_rank_list)
 
 if __name__ == '__main__':
     import sys
