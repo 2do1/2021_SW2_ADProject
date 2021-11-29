@@ -1,6 +1,9 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
-from League import LeagueRank
+from Team import TeamRank
+from Assist import AssistRank
+from Goal import GoalRank
+from AttackPoint import AttackPointRank
 
 class Soccer_Info(QWidget):
 
@@ -27,21 +30,20 @@ class Soccer_Info(QWidget):
         self.comboBox.addItem('Laliga')
         self.comboBox.addItem('Serie A')
         self.comboBox.addItem('Ligue 1')
-        self.comboBox.addItem('K League')
         selectLayout.addWidget(self.comboBox, 0, 0)
 
         # buttons
-        score_button = QPushButton('Score Rank')
-        selectLayout.addWidget(score_button)
-        score_button.clicked.connect(self.scoreClicked)
+        goal_button = QPushButton('Score Rank')
+        selectLayout.addWidget(goal_button)
+        goal_button.clicked.connect(self.goalClicked)
 
         assist_button = QPushButton('Assist Rank')
         selectLayout.addWidget(assist_button)
         assist_button.clicked.connect(self.assistClicked)
 
-        point_button = QPushButton('Attack Point Rank')
-        selectLayout.addWidget(point_button)
-        # point_button.clicked.connect(self.pointClicked)
+        attack_point_button = QPushButton('Attack Point Rank')
+        selectLayout.addWidget(attack_point_button)
+        attack_point_button.clicked.connect(self.attackPointClicked)
 
         team_button = QPushButton('Team Rank')
         selectLayout.addWidget(team_button)
@@ -55,16 +57,25 @@ class Soccer_Info(QWidget):
         self.setWindowTitle('축구 리그 정보')
 
     # connect
-    def scoreClicked(self):
-        pass
+    def goalClicked(self):
+        league = self.comboBox.currentText()  # 콤보박스에서 선택된 리그 가져오기
+        goal_rank = GoalRank(league)
+        self.rank_display.setText(goal_rank)
 
     def assistClicked(self):
-        pass
+        league = self.comboBox.currentText()  # 콤보박스에서 선택된 리그 가져오기
+        assist_rank = AssistRank(league)
+        self.rank_display.setText(assist_rank)
+
+    def attackPointClicked(self):
+        league = self.comboBox.currentText()  # 콤보박스에서 선택된 리그 가져오기
+        attack_point_rank = AttackPointRank(league)
+        self.rank_display.setText(attack_point_rank)
 
     def teamClickced(self):
-        league = self.comboBox.currentText() # 콤보박스에서 선택된 리그 가져오기
-        league_rank_list = LeagueRank(league)
-        self.rank_display.setText(league_rank_list)
+        league = self.comboBox.currentText()  # 콤보박스에서 선택된 리그 가져오기
+        team_rank = TeamRank(league)
+        self.rank_display.setText(team_rank)
 
 if __name__ == '__main__':
     import sys

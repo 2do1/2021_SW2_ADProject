@@ -1,7 +1,9 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
+import time
 
-def GoalRank(league):
+
+def AttackPointRank(league):
     # 크롬 웹드라이버를 다운받으셔야합니다.
     options = webdriver.ChromeOptions()
 
@@ -29,15 +31,17 @@ def GoalRank(league):
     url = "https://sports.news.naver.com/wfootball/record/index.nhn?category="
     url += select_league + "&tab=player&year=2021"
     driver.get(url)
+    driver.find_element_by_xpath('//*[@id="wfootballPlayerRecordBody"]/table/thead/tr/th[5]/a/strong').click()
+    time.sleep(0.5)
 
     page = driver.page_source
-    goal_rank_box = BeautifulSoup(page, "html.parser")
-    goal_rank_list = goal_rank_box.select('#wfootballPlayerRecordBody>table>tbody>tr')
+    attack_point_rank_box = BeautifulSoup(page, "html.parser")
+    attack_point_rank_list = attack_point_rank_box.select('#wfootballPlayerRecordBody>table>tbody>tr')
 
     rank = ""
-    for goal in goal_rank_list:
-        num = goal.select('.num > div.inner > strong')[0].text
-        name = goal.select('.name')[0].text
+    for attack_point in attack_point_rank_list:
+        num = attack_point.select('.num > div.inner > strong')[0].text
+        name = attack_point.select('.name')[0].text
         rank += num + "위 : " + name + "\n"
 
     return rank

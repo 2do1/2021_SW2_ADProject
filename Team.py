@@ -1,7 +1,7 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
-def GoalRank(league):
+def TeamRank(league):
     # 크롬 웹드라이버를 다운받으셔야합니다.
     options = webdriver.ChromeOptions()
 
@@ -12,7 +12,7 @@ def GoalRank(league):
     driver = webdriver.Chrome(path, chrome_options=options)
     driver.implicitly_wait(3)
 
-    select_league = ""  # 사용자가 선택한 리그
+    select_league = "" # 사용자가 선택한 리그
 
     # 사용자가 선택한 콤보박스 비교
     if league == "EPL":
@@ -27,17 +27,17 @@ def GoalRank(league):
         select_league = "ligue1"
 
     url = "https://sports.news.naver.com/wfootball/record/index.nhn?category="
-    url += select_league + "&tab=player&year=2021"
+    url += select_league + "&year=2021"
     driver.get(url)
 
     page = driver.page_source
-    goal_rank_box = BeautifulSoup(page, "html.parser")
-    goal_rank_list = goal_rank_box.select('#wfootballPlayerRecordBody>table>tbody>tr')
+    team_rank_box = BeautifulSoup(page, "html.parser")
+    team_rank_list = team_rank_box.select('#wfootballTeamRecordBody>table>tbody>tr')
 
     rank = ""
-    for goal in goal_rank_list:
-        num = goal.select('.num > div.inner > strong')[0].text
-        name = goal.select('.name')[0].text
+    for team in team_rank_list:
+        num = team.select('.num > div.inner > strong')[0].text
+        name = team.select('.name')[0].text
         rank += num + "위 : " + name + "\n"
 
     return rank
