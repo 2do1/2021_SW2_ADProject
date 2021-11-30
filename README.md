@@ -14,7 +14,7 @@
   - 오른쪽 화면: 순위 나타낼 항목을 선택하는 콤보박스와 버튼
   - 콤보박스에서 리그를 선택하고, 보고 싶은 순위 버튼을 클릭하면 해당 결과가 출력됩니다. 
 
-![gui](https://user-images.githubusercontent.com/28584275/143964471-81ee3d36-f601-402e-8a1e-5313c62b8505.png)
+![gui](https://user-images.githubusercontent.com/28584275/143986623-b8356833-5d9c-42a5-bd08-fcba8c2fb4af.png)
 
 * 라리가의 득점 순위가 나타난 결과입니다.
 
