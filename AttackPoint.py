@@ -10,38 +10,46 @@ def AttackPointRank(league):
     # 창이 뜨지 않게 설정
     options.add_argument('headless')
 
-    path = "C:\\Users\\admin\\Desktop\\SW2\\AD_Project\\chromedriver.exe"  # 크롬 webdriver 설치 경로를 설정해주세요
-    driver = webdriver.Chrome(path, chrome_options=options)
+    # 크롬 webdriver 설치 경로(절대 경로)를 설정해주세요
+    # window version
+    # path = "C:\\Users\\admin\\Desktop\\SW2\\AD_Project\\chromedriver.exe"  # 크롬 webdriver 설치 경로를 설정해주세요
+    # driver = webdriver.Chrome(path, chrome_options=options)
+
+    # ubuntu version
+    path = '/home/seonghwan/workspace/ad_project/chromedriver'
+    driver = webdriver.Chrome(executable_path=path, chrome_options=options)
     driver.implicitly_wait(3)
 
-    select_league = ""  # 사용자가 선택한 리그
+    select_league = ''  # 사용자가 선택한 리그
 
     # 사용자가 선택한 콤보박스 비교
-    if league == "EPL":
-        select_league = "epl"
-    elif league == "Laliga":
-        select_league = "primera"
-    elif league == "Bundesliga":
-        select_league = "bundesliga"
-    elif league == "Serie A":
-        select_league = "seria"
-    elif league == "Ligue 1":
-        select_league = "ligue1"
+    if league == 'EPL':
+        select_league = 'epl'
+    elif league == 'Laliga':
+        select_league = 'primera'
+    elif league == 'Bundesliga':
+        select_league = 'bundesliga'
+    elif league == 'Serie A':
+        select_league = 'seria'
+    elif league == 'Ligue 1':
+        select_league = 'ligue1'
 
-    url = "https://sports.news.naver.com/wfootball/record/index.nhn?category="
-    url += select_league + "&tab=player&year=2021"
+    url = 'https://sports.news.naver.com/wfootball/record/index.nhn?category='
+    url += select_league + '&tab=player&year=2021'
     driver.get(url)
-    driver.find_element_by_xpath('//*[@id="wfootballPlayerRecordBody"]/table/thead/tr/th[5]/a/strong').click()
+    driver.find_element_by_xpath(
+        '//*[@id="wfootballPlayerRecordBody"]/table/thead/tr/th[5]/a/strong').click()
     time.sleep(0.5)
 
     page = driver.page_source
-    attack_point_rank_box = BeautifulSoup(page, "html.parser")
-    attack_point_rank_list = attack_point_rank_box.select('#wfootballPlayerRecordBody>table>tbody>tr')
+    attack_point_rank_box = BeautifulSoup(page, 'html.parser')
+    attack_point_rank_list = attack_point_rank_box.select(
+        '#wfootballPlayerRecordBody>table>tbody>tr')
 
-    rank = ""
+    rank = ''
     for attack_point in attack_point_rank_list:
         num = attack_point.select('.num > div.inner > strong')[0].text
         name = attack_point.select('.name')[0].text
-        rank += num + "위 : " + name + "\n"
+        rank += num + '위 : ' + name + '\n'
 
     return rank
